@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "AOT5kJTuaMVOjmx6w8bbbwsG+tOpfNXt2sLqbP7rpf8=",
+  "Source": "IdentityJWTTest",
+  "BasePath": "_content/IdentityJWTTest",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
