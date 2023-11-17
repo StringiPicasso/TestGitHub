@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TeeamFootballProject.DataBase;
 using TeeamFootballProject.Models;
@@ -11,7 +12,7 @@ namespace TeeamFootballProject.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger,ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
             _logger = logger;
             _db = db;
@@ -20,7 +21,8 @@ namespace TeeamFootballProject.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<Player> objPlayerList = _db.Players;
+            IEnumerable<Player> objPlayerList = _db.Players.Include(t=>t.NameTeam);
+          
             return View(objPlayerList);
         }
 
@@ -32,20 +34,22 @@ namespace TeeamFootballProject.Controllers
             return View();
         }
 
-
         [HttpPost]
         public IActionResult Create(Player player)
         {
-            if (!ModelState.IsValid||_db.Teams.Where(x=>x.NameOfTeam==player.NameTeam.NameOfTeam).Count()>0)
+            if (!ModelState.IsValid || _db.Teams.Where(x => x.NameOfTeam == player.NameTeam.NameOfTeam).Count() > 0)
             {
+                _db.Teams.Add(player.NameTeam);
+                _db.SaveChanges();
                 ViewBag.Teams = new SelectList(_db.Teams, "Id", "NameOfTeam");
 
                 return View();
             }
-                _db.Players.Add(player);
-                _db.SaveChanges();
 
-                return RedirectToAction("Index");
+            _db.Players.Add(player);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -62,6 +66,7 @@ namespace TeeamFootballProject.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Teams = new SelectList(_db.Teams, "Id", "NameOfTeam");
 
             return View(playerFromDb);
         }
@@ -69,15 +74,19 @@ namespace TeeamFootballProject.Controllers
         [HttpPost]
         public IActionResult Edit(Player player)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid || _db.Teams.Where(x => x.NameOfTeam == player.NameTeam.NameOfTeam).Count() > 0)
             {
-                _db.Players.Update(player);
+                _db.Teams.Add(player.NameTeam);
                 _db.SaveChanges();
+                ViewBag.Teams = new SelectList(_db.Teams, "Id", "NameOfTeam");
 
-                return RedirectToAction("Index");
+                return View(player);
             }
 
-            return View(player);
+            _db.Players.Update(player);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
