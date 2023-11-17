@@ -1,0 +1,19 @@
+﻿@model TraningCode.Models.NumberBody
+
+<div class="row">
+    @{
+        if (Model == null)
+        {
+            Model.Result = 0;
+        }
+    }
+    <label>Result: @Model.Result</label>
+</div>
+
+<form method="post">
+<div class="row">
+    <label asp-for="LimitNumberPi">Number Limit</label>
+    <input asp-for="LimitNumberPi" />
+    <button type="submit">Submit</button>
+</div>
+</form>

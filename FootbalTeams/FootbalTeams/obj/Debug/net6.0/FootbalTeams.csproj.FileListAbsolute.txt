@@ -1,0 +1,8 @@
+C:\Users\Анастасия Еремина\Documents\GitHubTests\TestGitHub\FootbalTeams\FootbalTeams\obj\Debug\net6.0\FootbalTeams.csproj.AssemblyReference.cache
+C:\Users\Анастасия Еремина\Documents\GitHubTests\TestGitHub\FootbalTeams\FootbalTeams\obj\Debug\net6.0\FootbalTeams.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Анастасия Еремина\Documents\GitHubTests\TestGitHub\FootbalTeams\FootbalTeams\obj\Debug\net6.0\FootbalTeams.AssemblyInfoInputs.cache
+C:\Users\Анастасия Еремина\Documents\GitHubTests\TestGitHub\FootbalTeams\FootbalTeams\obj\Debug\net6.0\FootbalTeams.AssemblyInfo.cs
+C:\Users\Анастасия Еремина\Documents\GitHubTests\TestGitHub\FootbalTeams\FootbalTeams\obj\Debug\net6.0\FootbalTeams.csproj.CoreCompileInputs.cache
+C:\Users\Анастасия Еремина\Documents\GitHubTests\TestGitHub\FootbalTeams\FootbalTeams\obj\Debug\net6.0\FootbalTeams.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Анастасия Еремина\Documents\GitHubTests\TestGitHub\FootbalTeams\FootbalTeams\obj\Debug\net6.0\FootbalTeams.RazorAssemblyInfo.cache
+C:\Users\Анастасия Еремина\Documents\GitHubTests\TestGitHub\FootbalTeams\FootbalTeams\obj\Debug\net6.0\FootbalTeams.RazorAssemblyInfo.cs
