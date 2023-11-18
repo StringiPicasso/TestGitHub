@@ -31,21 +31,15 @@
 
         </div>
          <div class="mb-3">
-            <label asp-for="NameTeam.NameOfTeam" class="control-label"></label>
-            <select asp-for="NameTeam.NameOfTeam" asp-items="@ViewBag.Teams" class="form-select">
+          @*   <label asp-for="TeamId" class="control-label"></label>
+            <select asp-for="TeamId" asp-items="@ViewBag.Teams" class="form-control">
                 <option> select one</option>
             </select>
-            <input asp-for="NameTeam.NameOfTeam" class="form-control" />
-                    <span asp-validation-for="NameTeam.NameOfTeam" class="text-danger"></span>
-            @* <h4>add your city</h4>
-            <form asp-controller="Home" asp-action="Create">
-                <div class="form-group">
-                    <label asp-for="NameTeam.NameOfTeam" class="control-label"></label>
-                    <input asp-for="NameTeam.NameOfTeam" class="form-control" />
-                </div>
-                <input type="submit" value="submit" />
-
-            </form> *@
+                    <span asp-validation-for="TeamId" class="text-danger"></span> *@
+            <label asp-for="NameTeam.NameOfTeam" class="control-label"></label>
+            <select asp-for="NameTeam.NameOfTeam" class="form-control" asp-items="ViewBag.Teams">
+            </select>
+            <span asp-validation-for="NameTeam.NameOfTeam" class="text-danger"></span>
         </div> 
         <div class="mb-3">
             <label asp-for="Country"></label>

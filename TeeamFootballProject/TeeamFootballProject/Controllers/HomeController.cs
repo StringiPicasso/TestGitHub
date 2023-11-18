@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Numerics;
 using TeeamFootballProject.DataBase;
 using TeeamFootballProject.Models;
 
@@ -19,37 +20,57 @@ namespace TeeamFootballProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public Task<IActionResult> Index()
         {
             IEnumerable<Player> objPlayerList = _db.Players.Include(t=>t.NameTeam);
           
-            return View(objPlayerList);
+            return Task.FromResult<IActionResult>(View(objPlayerList));
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.Teams = new SelectList(_db.Teams, "Id", "NameOfTeam");
-
+            var teams = await _db.Players.Where(t => t.NameTeam == null).ToListAsync();
+            ViewData["Teams"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
+            //ViewBag.Teams = new SelectList(_db.Teams, "Id", "NameOfTeam");
             return View();
+            //ViewData["Teams"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
+            //return Task.FromResult<IActionResult>(View());
         }
 
         [HttpPost]
-        public IActionResult Create(Player player)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Player @player)
         {
-            if (!ModelState.IsValid || _db.Teams.Where(x => x.NameOfTeam == player.NameTeam.NameOfTeam).Count() > 0)
+            if (ModelState.IsValid)
             {
-                _db.Teams.Add(player.NameTeam);
-                _db.SaveChanges();
-                ViewBag.Teams = new SelectList(_db.Teams, "Id", "NameOfTeam");
-
-                return View();
+                _db.Players.Add(@player); // now your @class is containing the `TeacheID` value selected from drop-down.
+                await _db.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
+            return View();
 
-            _db.Players.Add(player);
-            _db.SaveChanges();
+            //if (ModelState.IsValid)
+            //{
+            //    _db.Players.Add(player);
+            //    await _db.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            //    return RedirectToAction("Index");
+
+            //}
+
+            //if(_db.Teams.Where(x => x.NameOfTeam == player.NameTeam.NameOfTeam).Count() > 0)
+            //{
+            //    _db.Teams.Add(player.NameTeam);
+            //    await _db.SaveChangesAsync();
+            //    ViewData["TeamId"] = new SelectList(_db.Teams, "Id", "NameOfTeam", player.TeamId);
+
+
+            //    return View();
+            //}
+            //ViewData["TeamId"] = new SelectList(_db.Teams, "Id", "NameOfTeam", player.TeamId);
+           
+            //return View();
         }
 
         [HttpGet]
