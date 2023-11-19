@@ -30,17 +30,12 @@
             <span asp-validation-for="DateBirth" class="text-danger"></span>
 
         </div>
-         <div class="mb-3">
-          @*   <label asp-for="TeamId" class="control-label"></label>
-            <select asp-for="TeamId" asp-items="@ViewBag.Teams" class="form-control">
-                <option> select one</option>
-            </select>
-                    <span asp-validation-for="TeamId" class="text-danger"></span> *@
+        <div class="mb-3">
             <label asp-for="NameTeam.NameOfTeam" class="control-label"></label>
             <select asp-for="NameTeam.NameOfTeam" class="form-control" asp-items="ViewBag.Teams">
             </select>
             <span asp-validation-for="NameTeam.NameOfTeam" class="text-danger"></span>
-        </div> 
+        </div>
         <div class="mb-3">
             <label asp-for="Country"></label>
             <select asp-for="Country" asp-items="Html.GetEnumSelectList<Countries>()" class="form-select"></select>

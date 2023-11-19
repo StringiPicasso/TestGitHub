@@ -28,23 +28,22 @@ namespace TeeamFootballProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public Task<IActionResult> Create()
         {
-            var teams = await _db.Players.Where(t => t.NameTeam == null).ToListAsync();
-            ViewData["Teams"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
+            //var teams = await _db.Players.Where(t => t.NameTeam == null).ToListAsync();
+            ViewData["Teams"] = new SelectList(_db.Teams, "NameOfTeam", "NameOfTeam");
             //ViewBag.Teams = new SelectList(_db.Teams, "Id", "NameOfTeam");
-            return View();
             //ViewData["Teams"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
-            //return Task.FromResult<IActionResult>(View());
+            return Task.FromResult<IActionResult>(View());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Player @player)
+        public async Task<IActionResult> Create(Player player)
         {
             if (ModelState.IsValid)
             {
-                _db.Players.Add(@player); // now your @class is containing the `TeacheID` value selected from drop-down.
+                _db.Players.Add(player); // now your @class is containing the `TeacheID` value selected from drop-down.
                 await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
