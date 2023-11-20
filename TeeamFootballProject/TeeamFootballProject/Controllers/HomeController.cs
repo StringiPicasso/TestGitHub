@@ -30,14 +30,8 @@ namespace TeeamFootballProject.Controllers
         [HttpGet]
         public Task<IActionResult> Create()
         {
-           // var player=new Player();
-            //ViewBag.TeamsId = GetTeams();
-            //var teams = await _db.Players.Where(t => t.NameTeam == null).ToListAsync();
             ViewData["TeamId"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
-
-          //  return View();
-           // ViewBag.TeamsId = new SelectList(_db.Teams, "Id", "NameOfTeam");
-            //ViewData["Teams"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
+            
             return Task.FromResult<IActionResult>(View());
         }
 
@@ -45,23 +39,24 @@ namespace TeeamFootballProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Player player)
         {
+            
+            //if (!ModelState.IsValid || _db.Teams.Where(x => x.NameOfTeam == player.NameTeam.NameOfTeam).Count() > 0)
+            //{
+            //   // ViewBag.Cities = new SelectList(_db.Teams, "Id", "CityName");
+            //}
             if (ModelState.IsValid)
             {
-
                 _db.Players.Add(player);
                 await _db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
-            return View();
 
-            //if (ModelState.IsValid)
-            //{
-            //    _db.Players.Add(player);
-            //    await _db.SaveChangesAsync();
+            ViewData["TeamId"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
+              
+                return View();
 
-            //    return RedirectToAction("Index");
-
-            //}
+          // return View();
 
             //if(_db.Teams.Where(x => x.NameOfTeam == player.NameTeam.NameOfTeam).Count() > 0)
             //{
@@ -72,9 +67,6 @@ namespace TeeamFootballProject.Controllers
 
             //    return View();
             //}
-            //ViewData["TeamId"] = new SelectList(_db.Teams, "Id", "NameOfTeam", player.TeamId);
-           
-            //return View();
         }
 
         [HttpGet]
@@ -91,6 +83,7 @@ namespace TeeamFootballProject.Controllers
             {
                 return NotFound();
             }
+
             ViewBag.Teams = new SelectList(_db.Teams, "Id", "NameOfTeam");
 
             return View(playerFromDb);

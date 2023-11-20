@@ -34,6 +34,11 @@
             <label asp-for="TeamId" class="control-label"></label>
             <select asp-for="TeamId" class="form-control" asp-items="ViewBag.TeamId">
             </select>
+            <div class="form-group">
+                <label asp-for="NameTeam.NameOfTeam" class="control-label"></label>
+                <input asp-for="NameTeam.NameOfTeam" class="form-control" />
+                <span asp-validation-for="NameTeam.NameOfTeam" class="text-danger"></span>
+            </div>
             <span asp-validation-for="TeamId" class="text-danger"></span>
         </div>
         <div class="mb-3">
