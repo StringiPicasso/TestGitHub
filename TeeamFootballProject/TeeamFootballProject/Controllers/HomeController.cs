@@ -30,9 +30,13 @@ namespace TeeamFootballProject.Controllers
         [HttpGet]
         public Task<IActionResult> Create()
         {
+           // var player=new Player();
+            //ViewBag.TeamsId = GetTeams();
             //var teams = await _db.Players.Where(t => t.NameTeam == null).ToListAsync();
-            ViewData["Teams"] = new SelectList(_db.Teams, "NameOfTeam", "NameOfTeam");
-            //ViewBag.Teams = new SelectList(_db.Teams, "Id", "NameOfTeam");
+            ViewData["TeamId"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
+
+          //  return View();
+           // ViewBag.TeamsId = new SelectList(_db.Teams, "Id", "NameOfTeam");
             //ViewData["Teams"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
             return Task.FromResult<IActionResult>(View());
         }
@@ -43,7 +47,8 @@ namespace TeeamFootballProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Players.Add(player); // now your @class is containing the `TeacheID` value selected from drop-down.
+
+                _db.Players.Add(player);
                 await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -113,6 +118,29 @@ namespace TeeamFootballProject.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private List<SelectListItem> GetTeams()
+        {
+            var listTeams = new List<SelectListItem>();
+
+            List<TeamNames> teamNames = _db.Teams.ToList();
+
+            listTeams = teamNames.Select(t => new SelectListItem()
+            {
+                Value = t.Id.ToString(),
+                Text=t.NameOfTeam
+            }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "select item"
+            };
+
+            listTeams.Insert(0, defItem);
+
+            return listTeams;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TeeamFootballProject.Models
@@ -22,6 +23,7 @@ namespace TeeamFootballProject.Models
 
         public int TeamId { get; set; }
         [ForeignKey("TeamId")]
+        [ValidateNever]
         public TeamNames NameTeam { get; set; }
 
         [Required]
