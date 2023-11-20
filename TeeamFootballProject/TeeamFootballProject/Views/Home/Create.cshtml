@@ -31,11 +31,12 @@
 
         </div>
         <div class="mb-3">
-            <label asp-for="TeamId" class="control-label"></label>
+            <label asp-for="TeamId" class="control-label">Select Team</label>
             <select asp-for="TeamId" class="form-control" asp-items="ViewBag.TeamId">
+                <option>Select one...</option>
             </select>
             <div class="form-group">
-                <label asp-for="NameTeam.NameOfTeam" class="control-label"></label>
+                <label asp-for="NameTeam.NameOfTeam" class="control-label">Or add new team</label>
                 <input asp-for="NameTeam.NameOfTeam" class="form-control" />
                 <span asp-validation-for="NameTeam.NameOfTeam" class="text-danger"></span>
             </div>

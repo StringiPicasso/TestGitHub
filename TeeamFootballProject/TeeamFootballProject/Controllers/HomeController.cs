@@ -22,8 +22,8 @@ namespace TeeamFootballProject.Controllers
         [HttpGet]
         public Task<IActionResult> Index()
         {
-            IEnumerable<Player> objPlayerList = _db.Players.Include(t=>t.NameTeam);
-          
+            IEnumerable<Player> objPlayerList = _db.Players.Include(t => t.NameTeam);
+
             return Task.FromResult<IActionResult>(View(objPlayerList));
         }
 
@@ -31,7 +31,7 @@ namespace TeeamFootballProject.Controllers
         public Task<IActionResult> Create()
         {
             ViewData["TeamId"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
-            
+
             return Task.FromResult<IActionResult>(View());
         }
 
@@ -39,34 +39,10 @@ namespace TeeamFootballProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Player player)
         {
-            
-            //if (!ModelState.IsValid || _db.Teams.Where(x => x.NameOfTeam == player.NameTeam.NameOfTeam).Count() > 0)
-            //{
-            //   // ViewBag.Cities = new SelectList(_db.Teams, "Id", "CityName");
-            //}
-            if (ModelState.IsValid)
-            {
-                _db.Players.Add(player);
-                await _db.SaveChangesAsync();
+            _db.Players.Add(player);
+            await _db.SaveChangesAsync();
 
-                return RedirectToAction("Index");
-            }
-
-            ViewData["TeamId"] = new SelectList(_db.Teams, "Id", "NameOfTeam");
-              
-                return View();
-
-          // return View();
-
-            //if(_db.Teams.Where(x => x.NameOfTeam == player.NameTeam.NameOfTeam).Count() > 0)
-            //{
-            //    _db.Teams.Add(player.NameTeam);
-            //    await _db.SaveChangesAsync();
-            //    ViewData["TeamId"] = new SelectList(_db.Teams, "Id", "NameOfTeam", player.TeamId);
-
-
-            //    return View();
-            //}
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -111,29 +87,6 @@ namespace TeeamFootballProject.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        private List<SelectListItem> GetTeams()
-        {
-            var listTeams = new List<SelectListItem>();
-
-            List<TeamNames> teamNames = _db.Teams.ToList();
-
-            listTeams = teamNames.Select(t => new SelectListItem()
-            {
-                Value = t.Id.ToString(),
-                Text=t.NameOfTeam
-            }).ToList();
-
-            var defItem = new SelectListItem()
-            {
-                Value = "",
-                Text = "select item"
-            };
-
-            listTeams.Insert(0, defItem);
-
-            return listTeams;
         }
     }
 }
